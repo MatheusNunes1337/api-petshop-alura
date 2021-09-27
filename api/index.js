@@ -5,7 +5,7 @@ require('dotenv').config()
 const router = require('./rotas/fornecedores')
 
 app.use(express.json())
-app.use('api/fornecedores', router)
+app.use(router)
 
 
 app.listen(process.env.PORT, () => {

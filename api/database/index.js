@@ -1,10 +1,12 @@
 const Sequelize = require('sequelize')
+require('dotenv').config()
 
+console.log('senha', process.env.PASS)
 
 const instancia = new Sequelize(
-    process.env.PORT,
+    process.env.DB,
     process.env.USER,
-    process.env.PASSWORD,
+    process.env.PASS,
     {
         host: process.env.HOST,
         dialect: 'mysql'

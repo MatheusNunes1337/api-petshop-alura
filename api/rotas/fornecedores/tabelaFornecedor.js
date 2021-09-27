@@ -21,5 +21,15 @@ module.exports = {
         }
 
         return fornecedor
+    },
+
+    async atualizar(id, dadosParaAtualizar) {
+        return modelo.update(
+            dadosParaAtualizar,
+            {
+                where: {id: id}
+            }
+        )
+
     }
 }

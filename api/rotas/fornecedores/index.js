@@ -26,4 +26,10 @@ router.get('/fornecedores/:id', async (req, res) => {
     }
 })
 
+router.put('fornecedor/:id', (req, res) => {
+    const id = req.params.id
+    const dados = Object.assign({}, req.body, {id: id})
+    const fornecedor = new Fornecedor(dados)
+})
+
 module.exports = router

@@ -4,7 +4,7 @@ const CampoInvalido = require('../../erros/campoInvalido')
 
 module.exports = {
     listar() {
-        return modelo.findAll()
+        return modelo.findAll({raw: true})
     },
 
     inserir(fornecedor) {

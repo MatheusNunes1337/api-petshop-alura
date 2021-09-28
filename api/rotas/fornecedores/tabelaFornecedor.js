@@ -1,4 +1,5 @@
 const modelo = require('./modeloTabelaFornecedor')
+const NaoEncontrado = require('../../erros/naoEncontrado')
 
 module.exports = {
     listar() {

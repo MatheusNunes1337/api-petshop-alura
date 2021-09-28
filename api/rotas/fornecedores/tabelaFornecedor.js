@@ -1,5 +1,6 @@
 const modelo = require('./modeloTabelaFornecedor')
 const NaoEncontrado = require('../../erros/naoEncontrado')
+const CampoInvalido = require('../../erros/campoInvalido')
 
 module.exports = {
     listar() {

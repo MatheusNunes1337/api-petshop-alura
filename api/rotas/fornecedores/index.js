@@ -52,7 +52,7 @@ router.delete('/fornecedores/:id', async (req, res) => {
         await fornecedor.remover()
         res.status(200).json({mensagem: 'fornecedor deletado com sucesso'})
     } catch(err) {
-        res.status(404).send({mensagem: err.message})
+        proximo(err)
     }
 
 

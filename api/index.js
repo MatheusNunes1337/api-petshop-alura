@@ -5,6 +5,7 @@ require('dotenv').config()
 const router = require('./rotas/fornecedores')
 const NaoEncontrado = require('./erros/naoEncontrado')
 const CampoInvalido = require('./erros/campoInvalido')
+const DadosNaoFornecidos = require('./erros/dadosNaoFornecidos')
 
 app.use(express.json())
 app.use(router)
@@ -16,7 +17,7 @@ app.use((err, req, res, proximo) => {
     if(err instanceof NaoEncontrado) {
         statusCode = 404
     } 
-    if(err instanceof CampoInvalido) {
+    if(err instanceof CampoInvalido || err instanceof DadosNaoFornecidos) {
         statusCode = 400
     }
     res.status(statusCode)

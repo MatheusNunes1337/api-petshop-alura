@@ -8,14 +8,14 @@ router.get('/fornecedores', async (req, res ) => {
     res.json(resultados)
 })
 
-router.post('/fornecedores', async (req, res) => {
+router.post('/fornecedores', async (req, res, proximo) => {
     try {
         console.log(req.body)
         const fornecedor = new Fornecedor(req.body)
         await fornecedor.criar()
         res.status(201).json(fornecedor)
     } catch(err) {
-        res.status(400).json({mensagem: err.message})
+        proximo(err)
     }
 })
 

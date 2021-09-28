@@ -14,7 +14,7 @@ router.post('/fornecedores', async (req, res) => {
         await fornecedor.criar()
         res.status(201).json(fornecedor)
     } catch(err) {
-        res.json({mensagem: err.message})
+        res.status(400).json({mensagem: err.message})
     }
 })
 
@@ -26,7 +26,7 @@ router.get('/fornecedores/:id', async (req, res) => {
         await fornecedor.carregar()
         res.status(200).json(fornecedor)
     } catch(err) {
-        res.json({mensagem: err.message})
+        res.status(404).json({mensagem: err.message})
     }
 })
 
@@ -38,7 +38,7 @@ router.put('/fornecedores/:id', async (req, res) => {
         await fornecedor.atualizar()
         res.status(200).json({mensagem: 'informações atualizadas com sucesso'})
     } catch(err) {
-        res.send({mensagem: err.message})
+        res.status(400).send({mensagem: err.message})
     }
 })
 
@@ -50,7 +50,7 @@ router.delete('/fornecedores/:id', async (req, res) => {
         await fornecedor.remover()
         res.status(200).json({mensagem: 'fornecedor deletado com sucesso'})
     } catch(err) {
-        res.send({mensagem: err.message})
+        res.status(404).send({mensagem: err.message})
     }
 
 

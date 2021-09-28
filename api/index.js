@@ -7,8 +7,27 @@ const NaoEncontrado = require('./erros/naoEncontrado')
 const CampoInvalido = require('./erros/campoInvalido')
 const DadosNaoFornecidos = require('./erros/dadosNaoFornecidos')
 const ValorNaoSuportado = require('./erros/valorNaoSuportado')
+const formatosAceitos = require('./serializador').formatosAceitos
 
 app.use(express.json())
+
+app.use((req, res, proximo) => {
+    let formatoRequisitado = req.header('Accept')
+
+    if(formatoRequisitado === '*/*') {
+        formatoRequisitado = 'application/json'
+    }
+
+    if(formatosAceitos.indexOf(formatoRequisitado) === -1) {
+        res.status(406)
+        res.end()
+        return
+    }
+
+    res.setHeader('Content-Type', formatoRequisitado)
+    proximo()
+})
+
 app.use(router)
 
 //middleware para tratamento dos erros não encontrado

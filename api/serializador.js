@@ -7,7 +7,7 @@ class Serializador {
 
     serializar(dados) {
         if(this.contentType === 'application/json') {
-            return this.json(this.filtrarObjeto(dados))
+            return this.json(this.filtrar(dados))
         }
 
         throw new ValorNaoSuportado(this.contentType)
@@ -23,6 +23,17 @@ class Serializador {
         })
 
         return novoObjeto
+    }
+
+    filtrar(dados) {
+        if(Array.isArray(dados)) {
+            dados = dados.map(item => {
+                return this.filtrarObjeto(item)
+            })
+        } else {
+            this.filtrarObjeto(dados)
+        }
+        return dados
     }
 }
 

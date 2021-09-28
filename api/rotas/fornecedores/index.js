@@ -8,10 +8,14 @@ router.get('/fornecedores', async (req, res ) => {
 })
 
 router.post('/fornecedores', async (req, res) => {
-    console.log(req.body)
-    const fornecedor = new Fornecedor(req.body)
-    await fornecedor.criar()
-    res.json(fornecedor)
+    try {
+        console.log(req.body)
+        const fornecedor = new Fornecedor(req.body)
+        await fornecedor.criar()
+        res.json(fornecedor)
+    } catch(err) {
+        res.json({mensagem: err.message})
+    }
 })
 
 router.get('/fornecedores/:id', async (req, res) => {
@@ -34,7 +38,7 @@ router.put('/fornecedores/:id', async (req, res) => {
         await fornecedor.atualizar()
         res.json({mensagem: 'informações atualizadas com sucesso'})
     } catch(err) {
-        res.send({mensagem: message.err})
+        res.send({mensagem: err.message})
     }
 })
 
@@ -43,8 +47,10 @@ router.delete('/fornecedores/:id', async (req, res) => {
         const id = req.params.id
         const fornecedor = new Fornecedor({id: id})
         await fornecedor.carregar()
+        await fornecedor.remover()
+        res.json({mensagem: 'fornecedor deletado com sucesso'})
     } catch(err) {
-        res.send({mensagem: message.err})
+        res.send({mensagem: err.message})
     }
 
 

@@ -1,6 +1,7 @@
 const router = require('express').Router()
 const tabelaFornecedor = require('./tabelaFornecedor')
 const Fornecedor = require('./Fornecedor')
+const NaoEncontrado = require('../../erros/naoEncontrado')
 
 router.get('/fornecedores', async (req, res ) => {
     const resultados = await tabelaFornecedor.listar()
@@ -30,7 +31,7 @@ router.get('/fornecedores/:id', async (req, res) => {
     }
 })
 
-router.put('/fornecedores/:id', async (req, res) => {
+router.put('/fornecedores/:id', async (req, res, proximo) => {
     try {
         const id = req.params.id
         const dados = Object.assign({}, req.body, {id: id})
@@ -38,7 +39,7 @@ router.put('/fornecedores/:id', async (req, res) => {
         await fornecedor.atualizar()
         res.status(200).json({mensagem: 'informações atualizadas com sucesso'})
     } catch(err) {
-        res.status(400).send({mensagem: err.message})
+        proximo(err)
     }
 })
 

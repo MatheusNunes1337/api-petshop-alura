@@ -21,7 +21,8 @@ router.post('/fornecedores', async (req, res, proximo) => {
         const fornecedor = new Fornecedor(req.body)
         await fornecedor.criar()
         const serializador = new SerializadorFornecedor(
-            res.getHeader('Content-Type')
+            res.getHeader('Content-Type'),
+            ['email', 'dataCriacao', 'dataAtualizacao', 'versao']
         )
         res.status(201).send(serializador.serializar(fornecedor))
     } catch(err) {

@@ -5,7 +5,9 @@ const NaoEncontrado = require('../../erros/naoEncontrado')
 const DadosNaoFornecidos = require('../../erros/dadosNaoFornecidos')
 const SerializadorFornecedor = require('../../serializador').SerializadorFornecedor
 
-router.get('/fornecedores', async (req, res ) => {
+const produtoRouter = require('./produtos')
+
+router.get('/', async (req, res ) => {
     const resultados = await tabelaFornecedor.listar()
     const serializador = new SerializadorFornecedor(
         res.getHeader('Content-Type')
@@ -15,7 +17,7 @@ router.get('/fornecedores', async (req, res ) => {
     )
 })
 
-router.post('/fornecedores', async (req, res, proximo) => {
+router.post('/', async (req, res, proximo) => {
     try {
         console.log(req.body)
         const fornecedor = new Fornecedor(req.body)
@@ -30,7 +32,7 @@ router.post('/fornecedores', async (req, res, proximo) => {
     }
 })
 
-router.get('/fornecedores/:id', async (req, res, proximo) => {
+router.get('/:id', async (req, res, proximo) => {
 
     try {
         const id = req.params.id
@@ -45,7 +47,7 @@ router.get('/fornecedores/:id', async (req, res, proximo) => {
     }
 })
 
-router.put('/fornecedores/:id', async (req, res, proximo) => {
+router.put('/:id', async (req, res, proximo) => {
     try {
         const id = req.params.id
         const dados = Object.assign({}, req.body, {id: id})
@@ -58,7 +60,7 @@ router.put('/fornecedores/:id', async (req, res, proximo) => {
     }
 })
 
-router.delete('/fornecedores/:id', async (req, res) => {
+router.delete('/:id', async (req, res) => {
     try {
         const id = req.params.id
         const fornecedor = new Fornecedor({id: id})
@@ -69,8 +71,8 @@ router.delete('/fornecedores/:id', async (req, res) => {
     } catch(err) {
         proximo(err)
     }
-
-
 })
+
+router.use('/:idFornecedor/produtos', produtoRouter)
 
 module.exports = router

@@ -29,7 +29,7 @@ app.use((req, res, proximo) => {
     proximo()
 })
 
-app.use(router)
+app.use('/api/fornecedores', router)
 
 //middleware para tratamento dos erros não encontrado
 

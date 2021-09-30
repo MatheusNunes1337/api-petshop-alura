@@ -17,7 +17,7 @@ class Produto {
             throw new Error('O campo de título está inválido')
         }
 
-        if(typeof this.preco !== 'number' || this.preco.length === 0) {
+        if(typeof this.preco !== 'number' || this.preco === 0) {
             throw new Error('O campo de preço está inválido')
         }
 

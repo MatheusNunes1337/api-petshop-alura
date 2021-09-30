@@ -5,7 +5,10 @@ const { SerializadorProduto } = require('../../../serializador')
 
 produtoRouter.get('/', async (req, res) => {
     const produtos = await tabelaProduto.listar(req.fornecedor.id)
-    res.json(produtos)
+    const serializadorProduto = new SerializadorProduto(
+        res.getHeader('Content-Type')
+    )
+    res.json(serializadorProduto.serializar(produtos))
 })
 
 produtoRouter.get("/:id", async (req, res, proximo) => {

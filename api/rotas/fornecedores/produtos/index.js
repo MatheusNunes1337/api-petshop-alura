@@ -83,7 +83,9 @@ produtoRouter.post('/:id/diminuir-estoque', async(req, res, proximo) => {
         const produto = new Produto(dados)
 
         await produto.carregar()
-        produto.estoque = produto.estoque - req.body.quantidade
+        produto.estoque = produto.estoque - req.body.quantidade //quantidade = quantidade vendida
+        await produto.diminuirEstoque()
+        res.status(204).end()
     } catch(err) {
         proximo(err)
     }

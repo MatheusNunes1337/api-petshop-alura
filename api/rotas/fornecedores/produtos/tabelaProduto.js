@@ -52,16 +52,16 @@ module.exports = {
 
     async diminuir(idProduto, idFornecedor, campo, quantidade) {
         return instancia.transaction(async transacao => {
-            const produto = Modelo.findOne({
+            const produto = await Modelo.findOne({
                 where: {
                     id: idProduto,
                     fornecedor: idFornecedor
                 }
             })
 
-            await produto.save()
-
             produto[campo] = quantidade
+
+            await produto.save()
 
             return produto
         })

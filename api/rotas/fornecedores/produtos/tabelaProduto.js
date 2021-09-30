@@ -1,3 +1,4 @@
+const { InsertQueryBuilder } = require('typeorm')
 const Modelo = require('./modeloTabelaProduto')
 
 module.exports = {
@@ -7,5 +8,9 @@ module.exports = {
                 fornecedor: idFornecedor
             }
         })
+    },
+
+    inserir(dados) {
+        return Modelo.create(dados)
     }
 }

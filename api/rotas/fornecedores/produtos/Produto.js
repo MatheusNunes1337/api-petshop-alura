@@ -25,6 +25,10 @@ class Produto {
         this.dataAtualizacao = resultado.dataAtualizacao
         this.versao = resultado.versao
     }
+
+    async apagar() {
+        return await Tabela.remover(this.id, this.fornecedor)
+    }
 }
 
 module.exports = Produto

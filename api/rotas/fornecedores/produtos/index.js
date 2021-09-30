@@ -15,4 +15,13 @@ produtoRouter.post('/', async (req, res) => {
     res.status(201).json(produto)
 })
 
+produtoRouter.delete('/:id', (req, res) => {
+    const dados = {
+        id: req.params.id,
+        idFornecedor: req.params.idFornecedor
+    }
+
+    const produto = new Produto(dados)
+})
+
 module.exports = produtoRouter

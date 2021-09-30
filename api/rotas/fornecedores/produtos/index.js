@@ -74,4 +74,19 @@ produtoRouter.delete('/:id', async (req, res) => {
     res.status(204).end()
 })
 
+produtoRouter.post('/:id/diminuir-estoque', async(req, res, proximo) => {
+    try {
+        const dados = {
+            id: req.params.id,
+            fornecedor: req.fornecedor.id
+        }
+        const produto = new Produto(dados)
+
+        await produto.carregar()
+        produto.estoque = produto.estoque - req.body.quantidade
+    } catch(err) {
+        proximo(err)
+    }
+})
+
 module.exports = produtoRouter

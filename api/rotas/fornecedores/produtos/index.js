@@ -8,7 +8,7 @@ produtoRouter.get('/', async (req, res) => {
     const serializadorProduto = new SerializadorProduto(
         res.getHeader('Content-Type')
     )
-    res.json(serializadorProduto.serializar(produtos))
+    res.send(serializadorProduto.serializar(produtos))
 })
 
 produtoRouter.get("/:id", async (req, res, proximo) => {
@@ -20,7 +20,11 @@ produtoRouter.get("/:id", async (req, res, proximo) => {
     
         const produto = new Produto(dados)
         await produto.carregar()
-        res.status(200).json(produto)
+        const serializadorProduto = new SerializadorProduto(
+            res.getHeader('Content-Type'),
+            ['preco', 'estoque', 'fornecedor', 'dataCriacao', 'dataAtualizacao', 'versao']
+        )
+        res.status(200).send(serializadorProduto.serializar(produto))
     } catch(err) {
         proximo(err)
     }
@@ -32,7 +36,10 @@ produtoRouter.post('/', async (req, res, proximo) => {
         const dados = Object.assign({}, req.body, { fornecedor: idFornecedor })
         const produto = new Produto(dados)
         await produto.criar()
-        res.status(201).json(produto)
+        const serializadorProduto = new SerializadorProduto(
+            res.getHeader('Content-Type')
+        )
+        res.status(201).send(serializadorProduto.serializar(produto))
     } catch(err) {
         proximo(err)
     }

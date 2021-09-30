@@ -2,6 +2,7 @@ const produtoRouter = require('express').Router({ mergeParams: true }) //mergePa
 const tabelaProduto = require('./tabelaProduto')
 const Produto = require('./Produto')
 const { SerializadorProduto } = require('../../../serializador')
+const router = require('..')
 
 produtoRouter.get('/', async (req, res) => {
     const produtos = await tabelaProduto.listar(req.fornecedor.id)
@@ -43,6 +44,16 @@ produtoRouter.post('/', async (req, res, proximo) => {
     } catch(err) {
         proximo(err)
     }
+})
+
+produtoRouter.put('/:id', async (req, res) => {
+    let dados = {
+        id: req.params.id,
+        fornecedor: req.fornecedor.id
+    }
+    dados = Object.assign({}, req.body, dados)
+
+    const produto = new Produto(dados)
 })
 
 produtoRouter.delete('/:id', async (req, res) => {

@@ -11,6 +11,8 @@ produtoRouter.post('/', async (req, res) => {
     const idFornecedor = req.params.idFornecedor
     const dados = Object.assign({}, req.body, { fornecedor: idFornecedor })
     const produto = new Produto(dados)
+    await produto.criar()
+    res.status(201).json(produto)
 })
 
 module.exports = produtoRouter

@@ -28,7 +28,8 @@ module.exports = {
             where: {
                 id: idProduto,
                 fornecedor: idFornecedor
-            }
+            },
+            raw: true
         })
 
         if(!encontrado) {

@@ -2,6 +2,7 @@ const express = require('express')
 const app = express()
 require('dotenv').config()
 
+
 const router = require('./rotas/fornecedores')
 const NaoEncontrado = require('./erros/naoEncontrado')
 const CampoInvalido = require('./erros/campoInvalido')

@@ -7,13 +7,19 @@ produtoRouter.get('/', async (req, res) => {
     res.json(produtos)
 })
 
-produtoRouter.get("/:id", async (req, res) => {
-    const dados = {
-        id: req.params.id,
-        fornecedor: req.fornecedor.id
+produtoRouter.get("/:id", async (req, res, proximo) => {
+    try {
+        const dados = {
+            id: req.params.id,
+            fornecedor: req.fornecedor.id
+        }
+    
+        const produto = new Produto(dados)
+        await produto.carregar()
+        res.status(200).json(produto)
+    } catch(err) {
+        proximo(err)
     }
-
-    const produto = new Produto(dados)
 })
 
 produtoRouter.post('/', async (req, res, proximo) => {

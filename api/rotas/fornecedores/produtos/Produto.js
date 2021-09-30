@@ -1,3 +1,5 @@
+const Tabela = require('./tabelaProduto')
+
 class Produto {
     constructor({ id, titulo, preco, estoque, fornecedor, dataCriacao, dataAtualizacao, versao }) {
         this.id = id
@@ -8,6 +10,20 @@ class Produto {
         this.dataCriacao = dataCriacao
         this.dataAtualizacao = dataAtualizacao
         this.versao = versao
+    }
+
+    async criar() {
+        const resultado = await Tabela.inserir({
+            titulo: this.titulo,
+            preco: this.preco,
+            estoque: this.estoque,
+            fornecedor: this.fornecedor,
+        })
+
+        this.id = resultado.id
+        this.dataCriacao = resultado.dataCriacao
+        this.dataAtualizacao = resultado.dataAtualizacao
+        this.versao = resultado.versao
     }
 }
 

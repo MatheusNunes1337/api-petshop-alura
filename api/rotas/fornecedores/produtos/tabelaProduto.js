@@ -1,5 +1,6 @@
 const { InsertQueryBuilder } = require('typeorm')
 const Modelo = require('./modeloTabelaProduto')
+const instancia = require('../../../database/')
 
 module.exports = {
     listar(idFornecedor) {
@@ -46,6 +47,23 @@ module.exports = {
                     id: idProduto,
                     fornecedor: idFornecedor
             }
+        })
+    },
+
+    async diminuir(idProduto, idFornecedor, campo, quantidade) {
+        return instancia.transaction(async transacao => {
+            const produto = Modelo.findOne({
+                where: {
+                    id: idProduto,
+                    fornecedor: idFornecedor
+                }
+            })
+
+            await produto.save()
+
+            produto[campo] = quantidade
+
+            return produto
         })
     }
 }

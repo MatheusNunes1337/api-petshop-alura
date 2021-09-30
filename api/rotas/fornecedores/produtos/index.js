@@ -46,14 +46,21 @@ produtoRouter.post('/', async (req, res, proximo) => {
     }
 })
 
-produtoRouter.put('/:id', async (req, res) => {
-    let dados = {
-        id: req.params.id,
-        fornecedor: req.fornecedor.id
-    }
-    dados = Object.assign({}, req.body, dados)
+produtoRouter.put('/:id', async (req, res, proximo) => {
+    try {
+        let dados = {
+            id: req.params.id,
+            fornecedor: req.fornecedor.id
+        }
 
-    const produto = new Produto(dados)
+        dados = Object.assign({}, req.body, dados)
+    
+        const produto = new Produto(dados)
+        await produto.atualizar()
+        res.status(204).end()
+    } catch(err) {
+        proximo(err)
+    }
 })
 
 produtoRouter.delete('/:id', async (req, res) => {

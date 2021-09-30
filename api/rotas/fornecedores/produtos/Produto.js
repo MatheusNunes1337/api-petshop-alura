@@ -76,10 +76,10 @@ class Produto {
             throw new Error('Não foram fornecidos dados para atualizar')
         }
 
-        return Tabela.atualizar({
-            id: this.id,
-            fornecedor: this.fornecedor
-        }, dadosParaAtualizar)
+        return Tabela.atualizar(
+            this.id,
+            this.fornecedor,
+            dadosParaAtualizar)
     }
 }
 

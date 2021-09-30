@@ -7,6 +7,15 @@ produtoRouter.get('/', async (req, res) => {
     res.json(produtos)
 })
 
+produtoRouter.get("/:id", async (req, res) => {
+    const dados = {
+        id: req.params.id,
+        fornecedor: req.fornecedor.id
+    }
+
+    const produto = new Produto(dados)
+})
+
 produtoRouter.post('/', async (req, res, proximo) => {
     try {
         const idFornecedor = req.fornecedor.id

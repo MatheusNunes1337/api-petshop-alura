@@ -1,3 +1,4 @@
+const { getById } = require('../tabelaFornecedor')
 const Tabela = require('./tabelaProduto')
 
 class Produto {
@@ -44,6 +45,16 @@ class Produto {
     async apagar() {
         console.log(this.id, this.fornecedor)
         return await Tabela.remover(this.id, this.fornecedor)
+    }
+
+    async carregar() {
+        const produto = await pegarPorId(this.id, this.fornecedor)
+        this.titulo = produto.titulo
+        this.preco = produto.preco
+        this.estoque = produto.estoque
+        this.dataCriacao = produto.dataCriacao
+        this.dataAtualizacao = produto.dataAtualizacao
+        this.versao = produto.versao
     }
 }
 

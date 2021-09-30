@@ -27,6 +27,7 @@ class Produto {
     }
 
     async apagar() {
+        console.log(this.id, this.fornecedor)
         return await Tabela.remover(this.id, this.fornecedor)
     }
 }

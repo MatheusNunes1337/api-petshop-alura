@@ -16,7 +16,8 @@ router.options('/', (req, res) => {
 router.get('/', async (req, res ) => {
     const resultados = await tabelaFornecedor.listar()
     const serializador = new SerializadorFornecedor(
-        res.getHeader('Content-Type')
+        res.getHeader('Content-Type'),
+        ['empresa']
     )
     res.send(
         serializador.serializar(resultados)
@@ -30,7 +31,7 @@ router.post('/', async (req, res, proximo) => {
         await fornecedor.criar()
         const serializador = new SerializadorFornecedor(
             res.getHeader('Content-Type'),
-            ['email', 'dataCriacao', 'dataAtualizacao', 'versao']
+            ['email', 'empresa', 'dataCriacao', 'dataAtualizacao', 'versao']
         )
         res.status(201).send(serializador.serializar(fornecedor))
     } catch(err) {
@@ -51,7 +52,8 @@ router.get('/:id', async (req, res, proximo) => {
         const fornecedor = new Fornecedor({ id: id })
         await fornecedor.carregar()
         const serializador = new SerializadorFornecedor(
-            res.getHeader('Content-Type')
+            res.getHeader('Content-Type'),
+            ['empresa']
         )
         res.status(200).json(serializador.serializar(fornecedor))
     } catch(err) {

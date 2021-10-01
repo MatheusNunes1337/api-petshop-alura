@@ -34,6 +34,25 @@ produtoRouter.get("/:id", async (req, res, proximo) => {
     }
 })
 
+produtoRouter.head('/:id', async (req, res, proximo) => {
+    try {
+        const dados = {
+            id: req.params.id,
+            fornecedor: req.fornecedor.id
+        }
+    
+        const produto = new Produto(dados)
+        await produto.carregar()
+    
+        res.set('ETag', produto.versao)
+        const timestamp = (new Date(produto.dataAtualizacao).getTime())
+        res.set('Last-Modified', timestamp)
+        res.status(200).end()
+    } catch(err) {
+        proximo(err)
+    }
+})
+
 produtoRouter.post('/', async (req, res, proximo) => {
     try {
         const idFornecedor = req.fornecedor.id

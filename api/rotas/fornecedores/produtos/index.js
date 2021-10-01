@@ -4,6 +4,12 @@ const Produto = require('./Produto')
 const { SerializadorProduto } = require('../../../serializador')
 const router = require('..')
 
+produtoRouter.options('/', (req, res) => {
+    res.set('Access-Control-Allow-Methods', 'GET, POST')
+    res.set('Access-Control-Allow-Headers', 'Content-Type')
+    res.status(204).end()
+})
+
 produtoRouter.get('/', async (req, res) => {
     const produtos = await tabelaProduto.listar(req.fornecedor.id)
     const serializadorProduto = new SerializadorProduto(
@@ -11,6 +17,27 @@ produtoRouter.get('/', async (req, res) => {
     )
     res.send(serializadorProduto.serializar(produtos))
 })
+
+produtoRouter.post('/', async (req, res, proximo) => {
+    try {
+        const idFornecedor = req.fornecedor.id
+        const dados = Object.assign({}, req.body, { fornecedor: idFornecedor })
+        const produto = new Produto(dados)
+        await produto.criar()
+        const serializadorProduto = new SerializadorProduto(
+            res.getHeader('Content-Type')
+        )
+        res.set('ETag', produto.versao)
+        const timestamp = (new Date(produto.dataAtualizacao).getTime())
+        res.set('Last-Modified', timestamp)
+        res.set('Location', `/api/fornecedores/${produto.fornecedor}/produto/${produto.id}`)
+        res.status(201).send(serializadorProduto.serializar(produto))
+    } catch(err) {
+        proximo(err)
+    }
+})
+
+
 
 produtoRouter.get("/:id", async (req, res, proximo) => {
     try {
@@ -53,24 +80,6 @@ produtoRouter.head('/:id', async (req, res, proximo) => {
     }
 })
 
-produtoRouter.post('/', async (req, res, proximo) => {
-    try {
-        const idFornecedor = req.fornecedor.id
-        const dados = Object.assign({}, req.body, { fornecedor: idFornecedor })
-        const produto = new Produto(dados)
-        await produto.criar()
-        const serializadorProduto = new SerializadorProduto(
-            res.getHeader('Content-Type')
-        )
-        res.set('ETag', produto.versao)
-        const timestamp = (new Date(produto.dataAtualizacao).getTime())
-        res.set('Last-Modified', timestamp)
-        res.set('Location', `/api/fornecedores/${produto.fornecedor}/produto/${produto.id}`)
-        res.status(201).send(serializadorProduto.serializar(produto))
-    } catch(err) {
-        proximo(err)
-    }
-})
 
 produtoRouter.put('/:id', async (req, res, proximo) => {
     try {

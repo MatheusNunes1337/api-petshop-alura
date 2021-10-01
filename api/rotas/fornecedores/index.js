@@ -7,6 +7,12 @@ const SerializadorFornecedor = require('../../serializador').SerializadorFornece
 
 const produtoRouter = require('./produtos')
 
+router.options('/', (req, res) => {
+    res.set('Access-Control-Allow-Methods', 'GET, POST')
+    res.set('Access-Control-Allow-Headers', 'Content-Type')
+    res.status(204).end()
+})
+
 router.get('/', async (req, res ) => {
     const resultados = await tabelaFornecedor.listar()
     const serializador = new SerializadorFornecedor(
@@ -30,6 +36,12 @@ router.post('/', async (req, res, proximo) => {
     } catch(err) {
         proximo(err)
     }
+})
+
+router.options('/', (req, res) => {
+    res.set('Access-Control-Allow-Methods', 'GET, PUT', 'DELETE')
+    res.set('Access-Control-Allow-Headers', 'Content-Type')
+    res.status(204).end()
 })
 
 router.get('/:id', async (req, res, proximo) => {

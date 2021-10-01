@@ -1,5 +1,6 @@
 const { getById } = require('../tabelaFornecedor')
 const Tabela = require('./tabelaProduto')
+const DadosNaoFornecidos = require('../../../erros/dadosNaoFornecidos')
 
 class Produto {
     constructor({ id, titulo, preco, estoque, fornecedor, dataCriacao, dataAtualizacao, versao }) {
@@ -73,7 +74,7 @@ class Produto {
         }
 
         if(Object.keys(dadosParaAtualizar).length === 0) {
-            throw new Error('Não foram fornecidos dados para atualizar')
+            throw new DadosNaoFornecidos()
         }
 
         return Tabela.atualizar(

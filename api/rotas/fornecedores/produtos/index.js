@@ -37,7 +37,7 @@ produtoRouter.post('/', async (req, res, proximo) => {
     }
 })
 
-produtoRouter.options('/', (req, res) => {
+produtoRouter.options('/:id', (req, res) => {
     res.set('Access-Control-Allow-Methods', 'GET, DELETE, PUT, HEAD')
     res.set('Access-Control-Allow-Headers', 'Content-Type')
     res.status(204).end()
@@ -114,6 +114,12 @@ produtoRouter.delete('/:id', async (req, res) => {
     console.log(dados)
     const produto = new Produto(dados)
     await produto.apagar()
+    res.status(204).end()
+})
+
+produtoRouter.options('/:id/diminuir-estoque', (req, res) => {
+    res.set('Access-Control-Allow-Methods', 'GET, DELETE, PUT, HEAD')
+    res.set('Access-Control-Allow-Headers', 'Content-Type')
     res.status(204).end()
 })
 

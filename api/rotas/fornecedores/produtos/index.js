@@ -40,6 +40,10 @@ produtoRouter.post('/', async (req, res, proximo) => {
         const serializadorProduto = new SerializadorProduto(
             res.getHeader('Content-Type')
         )
+        res.set('ETag', produto.versao)
+        const timestamp = (new Date(produto.dataAtualizacao).getTime())
+        res.set('Last-Modified', timestamp)
+        res.set('Location', `/api/fornecedores/${produto.fornecedor}/produto/${produto.id}`)
         res.status(201).send(serializadorProduto.serializar(produto))
     } catch(err) {
         proximo(err)

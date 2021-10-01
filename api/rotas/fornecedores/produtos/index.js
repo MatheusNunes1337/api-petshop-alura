@@ -25,6 +25,9 @@ produtoRouter.get("/:id", async (req, res, proximo) => {
             res.getHeader('Content-Type'),
             ['preco', 'estoque', 'fornecedor', 'dataCriacao', 'dataAtualizacao', 'versao']
         )
+        res.set('ETag', produto.versao)
+        const timestamp = (new Date(produto.dataAtualizacao).getTime())
+        res.set('Last-Modified', timestamp)
         res.status(200).send(serializadorProduto.serializar(produto))
     } catch(err) {
         proximo(err)

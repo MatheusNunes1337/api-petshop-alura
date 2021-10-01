@@ -4,6 +4,7 @@ require('dotenv').config()
 
 
 const router = require('./rotas/fornecedores')
+const routerV2 = require('./rotas/fornecedores/rotas.v2')
 const NaoEncontrado = require('./erros/naoEncontrado')
 const CampoInvalido = require('./erros/campoInvalido')
 const DadosNaoFornecidos = require('./erros/dadosNaoFornecidos')
@@ -36,6 +37,8 @@ app.use((req, res, proximo) => {
 })
 
 app.use('/api/fornecedores', router)
+
+app.use('/api/v2/fornecedores', routerV2)
 
 //middleware para tratamento dos erros não encontrado
 

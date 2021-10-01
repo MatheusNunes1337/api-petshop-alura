@@ -39,7 +39,7 @@ router.post('/', async (req, res, proximo) => {
 })
 
 router.options('/', (req, res) => {
-    res.set('Access-Control-Allow-Methods', 'GET, PUT', 'DELETE')
+    res.set('Access-Control-Allow-Methods', 'GET, PUT, DELETE')
     res.set('Access-Control-Allow-Headers', 'Content-Type')
     res.status(204).end()
 })

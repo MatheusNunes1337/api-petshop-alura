@@ -37,7 +37,11 @@ produtoRouter.post('/', async (req, res, proximo) => {
     }
 })
 
-
+produtoRouter.options('/', (req, res) => {
+    res.set('Access-Control-Allow-Methods', 'GET, DELETE, PUT, HEAD')
+    res.set('Access-Control-Allow-Headers', 'Content-Type')
+    res.status(204).end()
+})
 
 produtoRouter.get("/:id", async (req, res, proximo) => {
     try {

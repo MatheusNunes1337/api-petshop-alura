@@ -25,8 +25,8 @@ app.use((req, res, proximo) => {
         res.end()
         return
     }
-
     res.setHeader('Content-Type', formatoRequisitado)
+    res.set('X-Powered-By', 'Gatito Petshop')
     proximo()
 })
 

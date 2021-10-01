@@ -1,6 +1,7 @@
 const { InsertQueryBuilder } = require('typeorm')
 const Modelo = require('./modeloTabelaProduto')
 const instancia = require('../../../database/')
+const NaoEncontrado = require('../../../erros/naoEncontrado')
 
 module.exports = {
     listar(idFornecedor) {
@@ -35,7 +36,7 @@ module.exports = {
         })
 
         if(!encontrado) {
-            throw new Error('Produto não encontrado')
+            throw new NaoEncontrado('Produto')
         }
 
         return encontrado

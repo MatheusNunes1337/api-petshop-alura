@@ -96,6 +96,10 @@ produtoRouter.post('/:id/diminuir-estoque', async(req, res, proximo) => {
         await produto.carregar()
         produto.estoque = produto.estoque - req.body.quantidade //quantidade = quantidade vendida
         await produto.diminuirEstoque()
+        await produto.carregar()
+        res.set('ETag', produto.versao)
+        const timestamp = (new Date(produto.dataAtualizacao).getTime())
+        res.set('Last-Modified', timestamp)
         res.status(204).end()
     } catch(err) {
         proximo(err)

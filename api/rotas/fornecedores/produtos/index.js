@@ -118,7 +118,7 @@ produtoRouter.delete('/:id', async (req, res) => {
 })
 
 produtoRouter.options('/:id/diminuir-estoque', (req, res) => {
-    res.set('Access-Control-Allow-Methods', 'GET, DELETE, PUT, HEAD')
+    res.set('Access-Control-Allow-Methods', 'POST')
     res.set('Access-Control-Allow-Headers', 'Content-Type')
     res.status(204).end()
 })
